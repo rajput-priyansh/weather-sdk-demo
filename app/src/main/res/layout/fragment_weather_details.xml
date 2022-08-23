@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+        <import type="com.vibs.weatherdemosdk.utils.AppUtils" />
+
+        <variable
+            name="weatherObj"
+            type="com.vibs.weatherapisdk.models.ResponseWeather" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_gray">
+
+        <TextView
+            android:id="@+id/tvCurrentLocation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            android:drawableStart="@drawable/ic_baseline_location_on_24"
+            android:layout_marginEnd="@dimen/_8sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:layout_constraintEnd_toStartOf="@+id/tvChangeLocation" />
+
+        <TextView
+            android:id="@+id/tvChangeLocation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            android:drawableStart="@drawable/ic_baseline_edit_location_24"
+            android:text="@string/lbl_change_location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:layout_constraintWidth_percent="0.5"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="tvChangeLocation, tvCurrentLocation"
+            app:barrierDirection="bottom"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardWeather"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:contentPadding="@dimen/_16sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barrierLocation">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvDay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/tvTime"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Monday"
+                    android:text='@{weatherObj.dt != null ? AppUtils.formatDay(weatherObj.dt) : ""}'/>
+
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_baseline_access_time_24"
+                    android:drawablePadding="@dimen/_2sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="11:30 AM"
+                    android:text='@{weatherObj.dt != null ? AppUtils.formatTime(weatherObj.dt) : ""}'/>
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrierTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="tvDay,tvTime" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5" />
+
+                <TextView
+                    android:id="@+id/tvSunrise"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:drawableStart="@drawable/ic_sunrise_24"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/barrierTime"
+                    tools:text="05:04 AM"
+                    android:text='@{weatherObj.sys != null ? weatherObj.sys.sunrise != null ? AppUtils.formatTime(weatherObj.sys.sunrise) : "" : ""}'/>
+
+                <TextView
+                    android:id="@+id/tvSunset"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:drawableStart="@drawable/ic_sunset_24"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:gravity=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/guideline"
+                    app:layout_constraintTop_toBottomOf="@+id/barrierTime"
+                    tools:text="07:00 PM"
+                    android:text='@{weatherObj.sys != null ? weatherObj.sys.sunset != null ? AppUtils.formatTime(weatherObj.sys.sunset) : "" : ""}'/>
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrierSun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="tvSunrise,tvSunset" />
+
+                <TextView
+                    android:id="@+id/tvHumidity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:drawableStart="@drawable/ic_humidity"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/barrierSun"
+                    app:layout_constraintWidth_percent="0.33"
+                    tools:text="82"
+                    android:text='@{weatherObj.main != null ? weatherObj.main.humidity != null ? weatherObj.main.humidity : "" : ""}'/>
+
+                <TextView
+                    android:id="@+id/tvWind"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:drawableStart="@drawable/ic_wind"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintStart_toEndOf="@+id/tvHumidity"
+                    app:layout_constraintTop_toBottomOf="@+id/barrierSun"
+                    app:layout_constraintWidth_percent="0.33"
+                    tools:text="82 mph"
+                    android:text='@{weatherObj.wind != null ? weatherObj.wind.speed != null ? weatherObj.wind.speed + " mph" : "" : ""}' />
+
+                <TextView
+                    android:id="@+id/tvTemp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:drawableStart="@drawable/ic_temprature"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintStart_toEndOf="@+id/tvWind"
+                    app:layout_constraintTop_toBottomOf="@+id/barrierSun"
+                    app:layout_constraintWidth_percent="0.33"
+                    tools:text="82 F"
+                    android:text='@{weatherObj.main != null ? weatherObj.main.temp != null ? weatherObj.main.temp + " F" : "" : ""}'/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvForecast"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardWeather"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_weather_forecast" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Weather Demo SDK</string>
+    <string name="lbl_connection_error">Connection Error</string>
+    <string name="lbl_connection_error_sub_message">Oops! Seems You Don’t Have An Active Internet Connectivity</string>
+    <string name="lbl_retry">Retry</string>
+    <string name="lbl_message_location">Please turn on location</string>
+    <string name="lbl_change_location">Change Location</string>
+</resources>
